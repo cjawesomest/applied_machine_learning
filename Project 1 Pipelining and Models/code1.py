@@ -14,4 +14,5 @@ def load_data():
 
 if __name__ == "__main__":
     [data_features, data_labels] = load_data()
+    var = data_features.dtypes[1:].index
     pass
