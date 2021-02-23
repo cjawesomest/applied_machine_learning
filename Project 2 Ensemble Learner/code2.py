@@ -15,8 +15,8 @@ PLOT_ON = False
 LOAD_PARTIAL = True
 REF_DIR = "ref\\in"
 MEDIA_DIR = "ref\\out"
-MODEL_NAME = "model1.pkl"
-PIPELINE_NAME = "pipeline1.pkl"
+MODEL_NAME = "model2.pkl"
+PIPELINE_NAME = "pipeline2.pkl"
 
 #Load up the test data from the Pickle file
 def load_data(b_load_partial_data):
