@@ -48,4 +48,31 @@ def load_data(b_load_partial_data):
 if __name__ == "__main__":
     #Load Complete Data
     [data_features, data_labels] = load_data(LOAD_PARTIAL)
+
+    #Split Up Data
+    from sklearn.model_selection import train_test_split
+
+    data_train, data_val, label_train, label_val = train_test_split(data_features, data_labels, test_size=0.2)
+
+    #Model 1: SVM
+    from sklearn.linear_model import SGDClassifier
+
+    svm_model = SGDClassifier(loss='hinge', penalty='l2', 
+        alpha=1, shuffle=True, learning_rate='adaptive',
+        eta0=0.75, power_t=0.25, early_stopping=False)
+
+    svm_model.fit(data_train, label_train)
+
+    from sklearn.metrics import accuracy_score
+    from sklearn.model_selection import cross_val_predict
+
+    print("SVM Alone:\n====================")
+    print("Test Accuracy Score: " +str(
+            accuracy_score(label_train, svm_model.predict(data_train), normalize=True, sample_weight=None)))
+    print("Validation Accuracy Score: " +str(
+            accuracy_score(label_val, svm_model.predict(data_val), normalize=True, sample_weight=None)))
+    label_train_pred = cross_val_predict(svm_model, data_train, label_train, cv=5)
+    print("Validation Accuracy Score with Cross-Validation: "+str(
+            accuracy_score(label_train, label_train_pred, normalize=True, sample_weight=None)))
+
     pass
