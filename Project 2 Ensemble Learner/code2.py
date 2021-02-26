@@ -75,4 +75,55 @@ if __name__ == "__main__":
     print("Validation Accuracy Score with Cross-Validation: "+str(
             accuracy_score(label_train, label_train_pred, normalize=True, sample_weight=None)))
 
-    pass
+    #Model 2: Random Forest
+    
+    from sklearn.ensemble import RandomForestClassifier
+    rf_model = RandomForestClassifier(n_estimators=1000, criterion='gini', 
+        oob_score=True)
+
+    rf_model.fit(data_train, label_train)
+    
+    print("Random Forest Alone:\n====================")
+    print("Test Accuracy Score: " +str(
+            accuracy_score(label_train, rf_model.predict(data_train), normalize=True, sample_weight=None)))
+    print("Validation Accuracy Score: " +str(
+            accuracy_score(label_val, rf_model.predict(data_val), normalize=True, sample_weight=None)))
+    label_train_pred = cross_val_predict(rf_model, data_train, label_train, cv=5)
+    print("Validation Accuracy Score with Cross-Validation: "+str(
+            accuracy_score(label_train, label_train_pred, normalize=True, sample_weight=None)))
+    
+
+    #Model 3: Logiistic Regressor
+    from sklearn.linear_model import LogisticRegression
+    logr_model = LogisticRegression(C=0.0001, fit_intercept=False, multi_class='ovr',
+        penalty='l1', solver='liblinear')
+
+    logr_model.fit(data_train, label_train)
+
+    print("Logistric Regression Alone:\n====================")
+    print("Test Accuracy Score: " +str(
+            accuracy_score(label_train, logr_model.predict(data_train), normalize=True, sample_weight=None)))
+    print("Validation Accuracy Score: " +str(
+            accuracy_score(label_val, logr_model.predict(data_val), normalize=True, sample_weight=None)))
+    label_train_pred = cross_val_predict(logr_model, data_train, label_train, cv=5)
+    print("Validation Accuracy Score with Cross-Validation: "+str(
+            accuracy_score(label_train, label_train_pred, normalize=True, sample_weight=None)))
+
+    #Model 4: Ensemble
+    from sklearn.ensemble import VotingClassifier
+    ensemble_model = VotingClassifier(
+        estimators=[('svm', svm_model), ('rf', rf_model), ('logr', logr_model)],
+        voting='hard')
+    ensemble_model.fit(data_train, label_train)
+
+    print("Ensemble:\n====================")
+    print("Test Accuracy Score: " +str(
+            accuracy_score(label_train, ensemble_model.predict(data_train), normalize=True, sample_weight=None)))
+    print("Validation Accuracy Score: " +str(
+            accuracy_score(label_val, ensemble_model.predict(data_val), normalize=True, sample_weight=None)))
+    label_train_pred = cross_val_predict(ensemble_model, data_train, label_train, cv=5)
+    print("Validation Accuracy Score with Cross-Validation: "+str(
+            accuracy_score(label_train, label_train_pred, normalize=True, sample_weight=None)))
+
+    # Save Model
+    pickle.dump(ensemble_model, open(MODEL_NAME, 'wb'))
