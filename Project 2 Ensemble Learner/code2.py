@@ -125,5 +125,5 @@ if __name__ == "__main__":
     print("Validation Accuracy Score with Cross-Validation: "+str(
             accuracy_score(label_train, label_train_pred, normalize=True, sample_weight=None)))
 
-    # Save Model
-    pickle.dump(ensemble_model, open(MODEL_NAME, 'wb'))
+    # Save Models
+    pickle.dump([svm_model, rf_model, logr_model, ensemble_model], open(os.path.join(os.path.realpath(__file__),"..", MODEL_NAME), "wb"))
