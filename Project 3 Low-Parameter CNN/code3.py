@@ -8,6 +8,9 @@
 import os
 import pandas
 import pickle
+import keras
+from tensorflow import keras
+from tensorflow.keras.layers import Conv2D
 import numpy as np
 
 #Config
@@ -48,7 +51,9 @@ def load_data(b_load_partial_data):
 if __name__ == "__main__":
         #Load Complete Data
         [data_features, data_labels] = load_data(LOAD_PARTIAL)
-
+        model2 = keras.models.Sequential()
+        model2.add(Conv2D(64, 7))
+        print("hello")
         pass
 
     
