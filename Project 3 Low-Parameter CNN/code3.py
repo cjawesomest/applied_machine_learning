@@ -18,7 +18,7 @@ PLOT_ON = False
 LOAD_PARTIAL = True
 REF_DIR = "ref\\in"
 MEDIA_DIR = "ref\\out"
-MODEL_NAME = "model3.h5"
+MODEL_NAME = "model3"
 PIPELINE_NAME = "pipeline3.pkl"
 
 #Load up the test data from the Pickle file
@@ -121,5 +121,5 @@ if __name__ == "__main__":
     print("Validation Accuracy Score: "+str(model_res.evaluate(data_val, label_val)))
 
     #Save and output
-    model_res.save(os.path.join(os.path.realpath(__file__),"..", MODEL_NAME), save_format='h5')
-    #Please load model with (new_model = tf.keras.models.load_model('model.h5', custom_objects={'ResidualUnit': ResidualUnit}))
+    model_res.save(os.path.join(os.path.realpath(__file__),"..", MODEL_NAME+".h5"), save_format='h5')
+    #Please load model with (new_model = tf.keras.models.load_model('model.h5', custom_objects={'ResidualUnit': ResidualUnit})) or Pickle equivalent
