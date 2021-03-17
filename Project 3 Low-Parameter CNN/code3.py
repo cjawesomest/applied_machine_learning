@@ -94,7 +94,7 @@ if __name__ == "__main__":
         #Self-implemented for saving
         def get_config(self):
             base_config = super().get_config()
-            return {**base_config, "activation": self.activation, "main_layers": self.main_layers, "skip_layers": self.skip_layers}
+            return {**base_config, "filters": 16, "strides": 1}
 
 
     #The rest of the architecture
